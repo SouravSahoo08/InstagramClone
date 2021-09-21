@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StartupActivity">
+
+
+    <ImageView
+        android:id="@+id/instaIcon"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@drawable/instagram_icon"
+        android:layout_centerInParent="true"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/linearlayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/instaLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/instagram" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/button_background"
+            android:text="Log In"
+            android:textSize="18sp"
+            android:textColor="@color/colourBlack"
+            android:textAllCaps="false"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="10dp"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/register"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/button_background"
+            android:text="Register"
+            android:textSize="18sp"
+            android:textColor="@color/colourBlack"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+</RelativeLayout>

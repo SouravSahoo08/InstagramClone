@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".RegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="Register"
+            android:textColor="@color/black"
+            android:textSize="70dp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/usernameRedg"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Username"
+            android:paddingHorizontal="9dp"
+            android:textColorHint="#807A7A" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/nameRedg"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Name"
+            android:paddingHorizontal="9dp"
+            android:textColorHint="#807A7A" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/emailRedg"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Email"
+            android:paddingHorizontal="9dp"
+            android:textColorHint="#807A7A" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/passwordRedg"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Password"
+            android:paddingHorizontal="9dp"
+            android:textColorHint="#807A7A" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/registerBtn"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_background"
+            android:text="Register"
+            android:textAllCaps="false"
+            android:textColor="@color/colourBlack"
+            android:textSize="18sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/loginTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Already have an account? Log in here."
+            android:textSize="15sp" />
+
+    </LinearLayout>
+</RelativeLayout>

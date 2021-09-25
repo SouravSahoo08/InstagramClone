@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         loginUserText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
 
@@ -82,6 +82,8 @@ public class RegisterActivity extends AppCompatActivity {
                     map.put("Name", name);
                     map.put("Email", email);
                     map.put("User ID", mAuth.getCurrentUser().getUid());
+                    map.put("Bio", "");
+                    map.put("Image url", "default");
                     FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid())
                             .setValue(map).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -93,8 +95,8 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             pd.dismiss();
-                            Toast.makeText(RegisterActivity.this, "Successfully registered", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                            Toast.makeText(RegisterActivity.this, "Successfully registered, Welcome..", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                         }
                     });
 

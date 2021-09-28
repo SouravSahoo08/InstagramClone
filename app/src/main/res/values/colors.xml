@@ -12,4 +12,5 @@
     <color name="colourAccent">#C2BDBF</color>
     <color name="colourBlack">#000000</color>
     <color name="colourWhite">#ffffff</color>
+    <color name="colourBlue">#0017FF</color>
 </resources>

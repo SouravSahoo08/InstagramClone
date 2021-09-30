@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView buttmNavigationView;
+    private BottomNavigationView buttomNavigationView;
     private Fragment selectorFragment;
     private final int navHome = R.id.nav_home;
     private final int navSearch = R.id.nav_search;
@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        buttmNavigationView = findViewById(R.id.buttom_navigation);
-        buttmNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        buttomNavigationView = findViewById(R.id.buttom_navigation);
+        buttomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -62,35 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        /*buttmNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        selectorFragment = new HomeFragment();
-                        break;
-                    case R.id.nav_search:
-                        selectorFragment = new SearchFragment();
-                        break;
-                    case R.id.nav_add:
-                        selectorFragment = null;
-                        startActivity(new Intent(MainActivity.this, PostActivity.class));
-                        break;
-                    case R.id.nav_heart:
-                        selectorFragment = new NotificationFragment();
-                        break;
-                    case R.id.nav_profile:
-                        selectorFragment = new ProfileFragment();
-                        break;
-                }
-                if (selectorFragment != null) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectorFragment).commit();
-                }
-                return true;
-            }
-        });*/
-
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
     }
 }

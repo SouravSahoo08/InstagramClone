@@ -40,6 +40,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:20.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'de.hdodenhof:circleimageview:3.1.0' //circular image view
     implementation "com.hendraanggrian.appcompat:socialview:0.2" // base library
     implementation "com.hendraanggrian.appcompat:socialview-commons:0.2" // auto-complete hashtag and mention
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'

@@ -4,20 +4,20 @@ public class Users {
     private String Name;
     private String Email;
     private String Username;
-    private String Userid;
+    private String UserId;
     private String Bio;
-    private String Imageurl;
+    private String ImageUrl;
 
     public Users() {
     }
 
-    public Users(String name, String email, String username, String userid, String bio, String imageurl) {
+    public Users(String name, String email, String username, String userid, String bio, String imageUrl) {
         Name = name;
         Email = email;
         Username = username;
-        Userid = userid;
+        UserId = userid;
         Bio = bio;
-        Imageurl = imageurl;
+        ImageUrl = imageUrl;
     }
 
     public String getName() {
@@ -44,12 +44,12 @@ public class Users {
         Username = username;
     }
 
-    public String getUserid() {
-        return Userid;
+    public String getUserId() {
+        return UserId;
     }
 
-    public void setUserid(String userid) {
-        Userid = userid;
+    public void setUserId(String userid) {
+        UserId = userid;
     }
 
     public String getBio() {
@@ -60,11 +60,12 @@ public class Users {
         Bio = bio;
     }
 
-    public String getImageurl() {
-        return Imageurl;
+    public String getImageUrl() {
+        return ImageUrl;
     }
 
-    public void setImageurl(String imageurl) {
-        Imageurl = imageurl;
+    public void setImageUrl(String imageUrl) {
+        ImageUrl = imageUrl;
     }
+
 }

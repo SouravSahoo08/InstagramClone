@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/hashTag_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:padding="10dp"
+        android:src="@drawable/hashtag" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/hashTag_image"
+        android:orientation="vertical"
+        android:padding="2dp">
+
+        <TextView
+            android:id="@+id/hashTagtxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#hashtag"
+            android:textColor="@color/design_default_color_primary_dark" />
+
+        <TextView
+            android:id="@+id/no_of_posts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12 posts"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

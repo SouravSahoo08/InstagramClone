@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.instagram.Adapter.HashTagAdapter;
 import com.example.instagram.Adapter.UserAdapter;
 import com.example.instagram.Model.Users;
 import com.example.instagram.R;
@@ -35,6 +36,11 @@ public class SearchFragment extends Fragment {
     private List<Users> mUsers;
     private UserAdapter userAdapter;
 
+    private RecyclerView tagRecyclerView;
+    private List<String> mHashTags;
+    private List<String> mHashTagCount;
+    private HashTagAdapter tagAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,8 +55,17 @@ public class SearchFragment extends Fragment {
         mUsers = new ArrayList<>();
         userAdapter = new UserAdapter(getContext(), mUsers, true);
         userRecyclerView.setAdapter(userAdapter);
-
         readUser();
+
+        tagRecyclerView = view.findViewById(R.id.recyclerView_hashTags);
+        tagRecyclerView.setHasFixedSize(false);
+        tagRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mHashTags = new ArrayList<>();
+        mHashTagCount = new ArrayList<>();
+        tagAdapter = new HashTagAdapter(getContext(), mHashTags, mHashTagCount);
+        tagRecyclerView.setAdapter(tagAdapter);
+        readHashtags();
 
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -65,10 +80,44 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                filter(s.toString());
             }
         });
         return view;
+    }
+
+    private void filter(String txt) {
+        List<String> searchTags = new ArrayList<>();
+        List<String> searchTagsCount = new ArrayList<>();
+        for (String s : mHashTags) {
+            if (s.toLowerCase().contains(txt.toLowerCase())) {
+                searchTags.add(s);
+                searchTagsCount.add(mHashTagCount.get(mHashTags.indexOf(s)));
+            }
+        }
+        tagAdapter.filter(searchTags, searchTagsCount);
+    }
+
+    private void readHashtags() {
+
+        FirebaseDatabase.getInstance().getReference().child("Hash Tags").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mHashTags.clear();
+                mHashTagCount.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    mHashTags.add(dataSnapshot.getKey());
+                    mHashTagCount.add(String.valueOf(dataSnapshot.getChildrenCount()));
+                }
+                tagAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private void searchUser(String s) {

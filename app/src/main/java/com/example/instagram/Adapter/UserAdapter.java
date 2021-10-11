@@ -62,6 +62,29 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             holder.btnFollow.setVisibility(View.GONE);
             holder.isFollowing.setVisibility(View.GONE);
         }
+
+        /* Follow Unfollow feature */
+        holder.btnFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (holder.btnFollow.getText().toString().equals("Follow")) {
+                    FirebaseDatabase.getInstance().getReference().child("follow")
+                            .child(firebaseUser.getUid()).child("following").child(users.getUserid()).setValue(true);
+
+                    FirebaseDatabase.getInstance().getReference().child("follow")
+                            .child(users.getUserid()).child("followers").child(firebaseUser.getUid()).setValue(true);
+                } else {
+                    FirebaseDatabase.getInstance().getReference().child("follow")
+                            .child(firebaseUser.getUid()).child("following").child(users.getUserid()).removeValue();
+
+                    FirebaseDatabase.getInstance().getReference().child("follow")
+                            .child(users.getUserid()).child("followers").child(firebaseUser.getUid()).removeValue();
+                }
+
+            }
+        });
+
     }
 
     private void isFollowed(String userid, Button btnFollow, TextView isFollowing) {
@@ -71,7 +94,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(userid).exists()) {
+                    isFollowing.setVisibility(View.VISIBLE);
                     isFollowing.setText("Following");
+                    btnFollow.setText("Unfollow");
                 } else {
                     btnFollow.setText("Follow");
                     isFollowing.setVisibility(View.GONE);

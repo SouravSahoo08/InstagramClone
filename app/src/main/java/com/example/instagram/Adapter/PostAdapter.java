@@ -34,6 +34,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private final Context mContext;
     private final List<Posts> mPosts;
+    private String publisherName, publishersImgUrl;
 
     private FirebaseUser firebaseUser;
 
@@ -65,10 +66,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 if (users.getImageUrl().equals("default")) {
                     holder.userProfileImg.setImageResource(R.mipmap.ic_launcher);
                 } else {
-                    Picasso.get().load(users.getImageUrl()).into(holder.userProfileImg);
+                    publishersImgUrl = users.getImageUrl();
+                    Picasso.get().load(publishersImgUrl).into(holder.userProfileImg);
                 }
-                holder.userProfileName1.setText(users.getUsername());
-                holder.userProfileName2.setText(users.getUsername());
+                publisherName = users.getUsername();
+                holder.userProfileName1.setText(publisherName);
+                holder.userProfileName2.setText(publisherName);
+
             }
 
             @Override
@@ -100,6 +104,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 Intent intent = new Intent(mContext, CommentsSectionActivity.class);
                 intent.putExtra("PostId", posts.getPostId());
                 intent.putExtra("UserId", posts.getUserId());
+                intent.putExtra("publishersName", publisherName);
+                intent.putExtra("publishersImgUrl", publishersImgUrl);
                 mContext.startActivity(intent);
             }
         });
@@ -110,6 +116,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 Intent intent = new Intent(mContext, CommentsSectionActivity.class);
                 intent.putExtra("PostId", posts.getPostId());
                 intent.putExtra("UserId", posts.getUserId());
+                intent.putExtra("publishersName", publisherName);
+                intent.putExtra("publishersImgUrl", publishersImgUrl);
                 mContext.startActivity(intent);
             }
         });

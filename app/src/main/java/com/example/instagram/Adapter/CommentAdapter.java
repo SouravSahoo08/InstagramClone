@@ -3,6 +3,7 @@ package com.example.instagram.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.instagram.CommentsSectionActivity;
+import com.example.instagram.MainActivity;
 import com.example.instagram.Model.Comments;
 import com.example.instagram.Model.Users;
 import com.example.instagram.R;
@@ -66,6 +68,24 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        holder.userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra("publisherId", cmnt.getUserName());
+                mContext.startActivity(intent);
+            }
+        });
+
+        holder.userProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra("publisherId", cmnt.getUserName());
+                mContext.startActivity(intent);
             }
         });
 

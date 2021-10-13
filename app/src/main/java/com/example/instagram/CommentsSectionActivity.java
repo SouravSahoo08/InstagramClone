@@ -54,7 +54,7 @@ public class CommentsSectionActivity extends AppCompatActivity {
     private List<Comments> commentList;
 
 
-    private String PostId, UserId;
+    private String PostId, UserId, publishersName, publishersImgUrl;
     private FirebaseUser firebaseUser;
     private CircleImageView prevDespUserImg;
     private TextView prevDespUsername;
@@ -87,6 +87,8 @@ public class CommentsSectionActivity extends AppCompatActivity {
         Intent intent = getIntent();
         PostId = intent.getStringExtra("PostId");
         UserId = intent.getStringExtra("UserId");
+        publishersName = intent.getStringExtra("publishersName");
+        publishersImgUrl = intent.getStringExtra("publishersImgUrl");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         prevDespUserImg = findViewById(R.id.prev_desc_profileImage);
@@ -182,9 +184,9 @@ public class CommentsSectionActivity extends AppCompatActivity {
                     prevDespUserImg.setImageResource(R.mipmap.ic_launcher);
                 } else {
                     Picasso.get().load(users.getImageUrl()).into(userProfileImage);
-                    Picasso.get().load(users.getImageUrl()).into(prevDespUserImg);
+                    Picasso.get().load(publishersImgUrl).into(prevDespUserImg);
                 }
-                prevDespUsername.setText(users.getUsername());
+                prevDespUsername.setText(publishersName);
                 FirebaseDatabase.getInstance().getReference().child("Posts").child(PostId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {

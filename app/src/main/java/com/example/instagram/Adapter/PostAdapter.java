@@ -8,14 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.instagram.CommentsSectionActivity;
 import com.example.instagram.Model.Posts;
+import com.example.instagram.Model.Saved;
 import com.example.instagram.Model.Users;
 import com.example.instagram.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.hendraanggrian.appcompat.widget.SocialTextView;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -43,6 +49,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         this.mPosts = mPosts;
     }
 
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,6 +60,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        Intent intent = new Intent(mContext, CommentsSectionActivity.class);
         Posts posts = mPosts.get(position);
         Picasso.get().load(posts.getImageUrl()).into(holder.postImage);
         holder.postDescription.setText(posts.getDescription());
@@ -61,7 +69,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Users users = snapshot.getValue(Users.class);
-
+                publisherName = null;
+                publishersImgUrl = null;
                 //assert users != null;
                 if (users.getImageUrl().equals("default")) {
                     holder.userProfileImg.setImageResource(R.mipmap.ic_launcher);
@@ -72,7 +81,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 publisherName = users.getUsername();
                 holder.userProfileName1.setText(publisherName);
                 holder.userProfileName2.setText(publisherName);
-
+                intent.putExtra("publishersName", publisherName);
+                intent.putExtra("publishersImgUrl", publishersImgUrl);
             }
 
             @Override
@@ -84,6 +94,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         checkLiked(posts.getPostId(), holder.like);
         setLikeCountText(posts.getPostId(), holder.noOfLikes);
         getNoOfComments(posts.getPostId(), holder.noOfComments);
+
 
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,8 +115,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 Intent intent = new Intent(mContext, CommentsSectionActivity.class);
                 intent.putExtra("PostId", posts.getPostId());
                 intent.putExtra("UserId", posts.getUserId());
-                intent.putExtra("publishersName", publisherName);
-                intent.putExtra("publishersImgUrl", publishersImgUrl);
+                /*intent.putExtra("publishersName", publisherName);
+                intent.putExtra("publishersImgUrl", publishersImgUrl);*/
                 mContext.startActivity(intent);
             }
         });
@@ -113,14 +124,61 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.noOfComments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, CommentsSectionActivity.class);
+
                 intent.putExtra("PostId", posts.getPostId());
                 intent.putExtra("UserId", posts.getUserId());
-                intent.putExtra("publishersName", publisherName);
-                intent.putExtra("publishersImgUrl", publishersImgUrl);
+                /*intent.putExtra("publishersName", publisherName);
+                intent.putExtra("publishersImgUrl", publishersImgUrl);*/
                 mContext.startActivity(intent);
             }
         });
+
+        checkIsSaved(posts.getPostId(), holder.save);
+        holder.save.setOnClickListener(v -> {
+            Map<String, Object> map = new HashMap<>();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Saved").child(firebaseUser.getUid());
+            if (holder.save.getTag().equals("NotSaved")) {
+                map.put("PostId", posts.getPostId());
+                map.put("ImageUrl", posts.getImageUrl());
+
+                ref.child(posts.getPostId()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(mContext, "Post saved", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                ref.child(posts.getPostId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(mContext, "Post unasaved", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+    }
+
+    private void checkIsSaved(String postId, ImageView save) {
+
+        FirebaseDatabase.getInstance().getReference().child("Saved").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child(postId).exists()) {
+                    save.setImageResource(R.drawable.ic_save_clicked);
+                    save.setTag("Saved");
+                } else {
+                    save.setImageResource(R.drawable.ic_save);
+                    save.setTag("NotSaved");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private void getNoOfComments(String postId, TextView text) {

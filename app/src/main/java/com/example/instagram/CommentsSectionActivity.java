@@ -109,7 +109,7 @@ public class CommentsSectionActivity extends AppCompatActivity {
         recyclerViewComments.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewComments.setHasFixedSize(true);
         commentList = new ArrayList<>();
-        commentAdapter = new CommentAdapter(this, commentList);
+        commentAdapter = new CommentAdapter(this, commentList, PostId);
         recyclerViewComments.setAdapter(commentAdapter);
         getComments();
 
@@ -138,13 +138,15 @@ public class CommentsSectionActivity extends AppCompatActivity {
     }
 
     private void addComment() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Comments").child(PostId);
+        String commnetId = ref.push().getKey();
         Map<String, Object> map = new HashMap<>();
         map.clear();
         map.put("comment", commentBox.getText().toString());
+        map.put("commnetId", commnetId);
         map.put("userName", firebaseUser.getUid());
-
-        FirebaseDatabase.getInstance().getReference().child("Comments").child(PostId).push()
-                .setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+        ref.child(commnetId).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
 

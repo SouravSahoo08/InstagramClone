@@ -15,9 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.instagram.Adapter.GalleryAdapter;
+import com.example.instagram.Adapter.SavedAdapter;
 import com.example.instagram.Model.Posts;
+import com.example.instagram.Model.Saved;
 import com.example.instagram.Model.Users;
 import com.example.instagram.R;
 import com.example.instagram.StartupActivity;
@@ -30,6 +34,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hendraanggrian.appcompat.widget.SocialTextView;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -45,6 +53,10 @@ public class ProfileFragment extends Fragment {
     private AppCompatButton editProfileOrFollowBtn, mesgBtn;
     private ImageButton postSelector, saveSelector;
     private RecyclerView recyclerViewPostList, recyclerViewSavedList;
+    private GalleryAdapter galleryAdapter;
+    private List<Posts> photos;
+    private SavedAdapter savedAdapter;
+    private List<Saved> savedPosts;
     private FirebaseUser firebaseUser;
     private String profileId;
 
@@ -128,6 +140,28 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        postSelector.setOnClickListener(v -> {
+            recyclerViewPostList.setVisibility(View.VISIBLE);
+            recyclerViewSavedList.setVisibility(View.GONE);
+        });
+        photos = new ArrayList<>();
+        galleryAdapter = new GalleryAdapter(getContext(), photos);
+        recyclerViewPostList.setHasFixedSize(true);
+        recyclerViewPostList.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        recyclerViewPostList.setAdapter(galleryAdapter);
+        getUsersPosts();
+
+        saveSelector.setOnClickListener(v -> {
+            recyclerViewPostList.setVisibility(View.GONE);
+            recyclerViewSavedList.setVisibility(View.VISIBLE);
+        });
+        savedPosts = new ArrayList<>();
+        savedAdapter = new SavedAdapter(getContext(), savedPosts);
+        recyclerViewSavedList.setHasFixedSize(true);
+        recyclerViewSavedList.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        recyclerViewSavedList.setAdapter(savedAdapter);
+        getUsersSavedPosts();
+
         logout = view.findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +173,52 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
+
+    }
+
+    private void getUsersSavedPosts() {
+
+        FirebaseDatabase.getInstance().getReference().child("Saved").child(profileId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                savedPosts.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Saved saved = dataSnapshot.getValue(Saved.class);
+                    savedPosts.add(saved);
+                }
+                Collections.reverse(photos);
+                savedAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void getUsersPosts() {
+
+        FirebaseDatabase.getInstance().getReference().child("Posts").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                photos.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Posts posts = dataSnapshot.getValue(Posts.class);
+
+                    if (posts.getUserId().equals(profileId))
+                        photos.add(posts);
+                }
+                Collections.reverse(photos);
+                galleryAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 

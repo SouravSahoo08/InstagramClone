@@ -19,6 +19,8 @@ import com.example.instagram.MainActivity;
 import com.example.instagram.Model.Comments;
 import com.example.instagram.Model.Users;
 import com.example.instagram.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,17 +37,19 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     private final Context mContext;
     private final List<Comments> mComments;
+    private final String postId;
 
-    public CommentAdapter(Context mContext, List<Comments> mComments) {
+    public CommentAdapter(Context mContext, List<Comments> mComments, String postId) {
         this.mContext = mContext;
         this.mComments = mComments;
+        this.postId = postId;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.comments_list_layout, parent, false);
-        return new CommentAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -89,6 +93,27 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             }
         });
 
+        holder.commentTxt.setOnLongClickListener(v -> {
+            new AlertDialog.Builder(mContext)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Delete Comment")
+                    .setMessage("Are you sure want to delete the comment?")
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            FirebaseDatabase.getInstance().getReference().child("Comments").child(postId)
+                                    .child(cmnt.getCommnetId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(mContext, "comment deleted", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }).show();
+            return false;
+        });
+
     }
 
     @Override
@@ -97,7 +122,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public CircleImageView userProfileImage;
         public TextView userName;
@@ -110,26 +135,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             userProfileImage = itemView.findViewById(R.id.user_profile_commentLayout);
             userName = itemView.findViewById(R.id.user_profile_name_comments);
             commentTxt = itemView.findViewById(R.id.comment_text);
-
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    new AlertDialog.Builder(mContext)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setTitle("Delete Comment")
-                            .setMessage("Are you sure want to delete the comment?")
-                            .setNegativeButton("No", null)
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    /*FirebaseDatabase.getInstance().getReference().child("Comments").child(new CommentsSectionActivity().getPostId()).removeValue();*/
-                                }
-                            }).show();
-
-                    return true;
-                }
-            });
-
             //commentLike = itemView.findViewById(R.id.comment_like);
 
         }

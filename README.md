@@ -5,12 +5,14 @@ It's a cloned version of Instagram app with Firebase Database Integration.
 
 
 
-## Acknowledgements
-
+## Tools
+ - Language : Java
  - Database Support : [Firebase database](firebase.google.com)
+ 
+## Dependences used
  - [Social TextViews implementation](https://github.com/hendraanggrian/socialview)
  - [Circular ImageView implementation](https://github.com/hdodenhof/CircleImageView)
- 
+ - [Picasso](https://github.com/square/picasso)
   
 ## Demo
 - splash and login screen

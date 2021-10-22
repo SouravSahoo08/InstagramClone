@@ -14,8 +14,10 @@ It's a cloned version of Instagram app with Firebase Database Integration.
 
   
 ## Demo
-<img data-canonical-src="https://user-images.githubusercontent.com/84462204/138424488-b7e22b52-dc8f-43c1-9c05-b763f1e0e71f.gif" width="200" height="400" />
+- splash and login screen
+<img src="https://user-images.githubusercontent.com/84462204/138424488-b7e22b52-dc8f-43c1-9c05-b763f1e0e71f.gif" width="250" height="450" />
 
-
-
+## Screenshots
   
+<img alt="efew" src="https://user-images.githubusercontent.com/84462204/138427676-6ad28503-f461-4908-a2a4-17b823c7f9b6.jpg" width="250" height="450" />    <img src="https://user-images.githubusercontent.com/84462204/138427686-92c96027-313b-4a55-a5fb-157dd638bdc1.jpg" width="250" height="450" />   <img src="https://user-images.githubusercontent.com/84462204/138427692-ffe2369e-5140-4c05-9f7c-9723249e7ed4.jpg" width="250" height="450" /> 
+

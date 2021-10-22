@@ -14,7 +14,7 @@ It's a cloned version of Instagram app with Firebase Database Integration.
 
   
 ## Demo
-![Hnet-image](https://user-images.githubusercontent.com/84462204/138424488-b7e22b52-dc8f-43c1-9c05-b763f1e0e71f.gif)
+![Hnet-image](https://user-images.githubusercontent.com/84462204/138424488-b7e22b52-dc8f-43c1-9c05-b763f1e0e71f.gif =250x250)
 
 
 

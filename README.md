@@ -3,8 +3,6 @@
 
 It's a cloned version of Instagram app with Firebase Database Integration.
 
-
-
 ## Tools
  - Language : Java
  - Database Support : [Firebase database](firebase.google.com)
@@ -21,4 +19,8 @@ It's a cloned version of Instagram app with Firebase Database Integration.
 ## Screenshots
   
 <img alt="efew" src="https://user-images.githubusercontent.com/84462204/138427676-6ad28503-f461-4908-a2a4-17b823c7f9b6.jpg" width="250" height="500" />    <img src="https://user-images.githubusercontent.com/84462204/138427686-92c96027-313b-4a55-a5fb-157dd638bdc1.jpg" width="250" height="500" />   <img src="https://user-images.githubusercontent.com/84462204/138427692-ffe2369e-5140-4c05-9f7c-9723249e7ed4.jpg" width="250" height="500" /> 
+
+| Platform | Download |
+|----------|----------|
+| Android    |[](https://github.com/SouravSahoo08/InstagramClone/releases/download/Instagram-clone-v1.0.0/app-debug.apk)|
 

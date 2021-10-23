@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.instagram.Model.Posts;
 import com.example.instagram.R;
+import com.example.instagram.fragments.PostDetailFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -36,6 +39,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Posts posts = mPosts.get(position);
         Picasso.get().load(posts.getImageUrl()).into(holder.galleryUnit);
+
+        holder.galleryUnit.setOnClickListener(v -> {
+            mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
+                    .putString("postId", posts.getPostId()).apply();
+            ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new PostDetailFragment()).commit();
+        });
     }
 
     @Override

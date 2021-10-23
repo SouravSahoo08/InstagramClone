@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.instagram.Adapter.GalleryAdapter;
 import com.example.instagram.Adapter.SavedAdapter;
+import com.example.instagram.EditProfileActivity;
 import com.example.instagram.Model.Posts;
 import com.example.instagram.Model.Saved;
 import com.example.instagram.Model.Users;
@@ -70,7 +71,8 @@ public class ProfileFragment extends Fragment {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         //profileId = firebaseUser.getUid();
 
-        String data = getContext().getSharedPreferences("PROFILE", Context.MODE_PRIVATE).getString("profileID", "none");
+        String data = getContext().getSharedPreferences("PROFILE", Context.MODE_PRIVATE)
+                .getString("profileID", "none");
         if (data.equals("none")) {
             profileId = firebaseUser.getUid();
         } else {
@@ -104,7 +106,7 @@ public class ProfileFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*startActivity(new Intent(getContext(), StartupActivity.class));*/
+                startActivity(new Intent(getContext(), HomeFragment.class));
                 requireActivity().finish();
             }
         });
@@ -135,7 +137,8 @@ public class ProfileFragment extends Fragment {
                                 .child(firebaseUser.getUid()).removeValue();
                     }
                 } else {
-                    //message button code
+                    //editProfile
+                    startActivity(new Intent(getActivity(), EditProfileActivity.class));
                 }
             }
         });

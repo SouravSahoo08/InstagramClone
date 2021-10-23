@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.instagram.CommentsSectionActivity;
@@ -18,6 +19,8 @@ import com.example.instagram.Model.Posts;
 import com.example.instagram.Model.Saved;
 import com.example.instagram.Model.Users;
 import com.example.instagram.R;
+import com.example.instagram.fragments.PostDetailFragment;
+import com.example.instagram.fragments.ProfileFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -95,6 +98,29 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         setLikeCountText(posts.getPostId(), holder.noOfLikes);
         getNoOfComments(posts.getPostId(), holder.noOfComments);
 
+        holder.userProfileImg.setOnClickListener(v -> {
+            mContext.getSharedPreferences("PROFILE", Context.MODE_PRIVATE).edit()
+                    .putString("profileID", posts.getUserId()).apply();
+
+            ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new ProfileFragment()).commit();
+        });
+
+        holder.userProfileName1.setOnClickListener(v -> {
+            mContext.getSharedPreferences("PROFILE", Context.MODE_PRIVATE).edit()
+                    .putString("profileID", posts.getUserId()).apply();
+
+            ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new ProfileFragment()).commit();
+        });
+
+        holder.userProfileName2.setOnClickListener(v -> {
+            mContext.getSharedPreferences("PROFILE", Context.MODE_PRIVATE).edit()
+                    .putString("profileID", posts.getUserId()).apply();
+
+            ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new ProfileFragment()).commit();
+        });
 
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -81,9 +81,9 @@ public class RegisterActivity extends AppCompatActivity {
                     map.put("Username", username);
                     map.put("Name", name);
                     map.put("Email", email);
-                    map.put("User ID", mAuth.getCurrentUser().getUid());
+                    map.put("UserId", mAuth.getCurrentUser().getUid());
                     map.put("Bio", "");
-                    map.put("Image url", "default");
+                    map.put("ImageUrl", "default");
                     FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid())
                             .setValue(map).addOnFailureListener(new OnFailureListener() {
                         @Override

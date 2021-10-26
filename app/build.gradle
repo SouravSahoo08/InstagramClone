@@ -44,7 +44,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0' //circular image view
     implementation "com.hendraanggrian.appcompat:socialview:0.2" // base library
     implementation "com.hendraanggrian.appcompat:socialview-commons:0.2" // auto-complete hashtag and mention
-    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    implementation "com.rengwuxian.materialedittext:library:2.1.4" //material edittext
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+' // Image cropper
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

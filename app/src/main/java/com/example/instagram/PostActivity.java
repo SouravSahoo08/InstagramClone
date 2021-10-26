@@ -1,20 +1,20 @@
 package com.example.instagram;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.instagram.Utility.UtilityClass;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -93,7 +93,7 @@ public class PostActivity extends AppCompatActivity {
 
             /* under Posts node for each user, corresponding image post is stored */
             StorageReference fileRef = FirebaseStorage.getInstance().getReference("Posts").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+                    .child(System.currentTimeMillis() + "." + UtilityClass.getFileExtension(this, imageUri));
             fileRef.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -160,10 +160,6 @@ public class PostActivity extends AppCompatActivity {
             Toast.makeText(this, "Image not added, Tap the \"Plus icon\".", Toast.LENGTH_SHORT).show();
         }
 
-    }
-
-    private String getFileExtension(Uri imageUri) {
-        return MimeTypeMap.getSingleton().getExtensionFromMimeType(this.getContentResolver().getType(imageUri));
     }
 
     @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -82,50 +83,33 @@
                 android:textColor="@color/colourBlue"
                 android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:labelFor="@+id/editname"
-                android:text="Name"
-                android:textSize="18sp" />
 
-            <EditText
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:labelFor="@+id/editname"
-                android:text="Username"
-                android:textSize="18sp" />
+                android:layout_marginTop="15dp"
+                android:hint="Name"
+                app:met_floatingLabel="highlight" />
 
 
-            <EditText
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp" />
+                android:layout_marginTop="15dp"
+                android:hint="Username"
+                app:met_floatingLabel="highlight" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:labelFor="@+id/editname"
-                android:text="Bio"
-                android:textSize="18sp" />
-
-            <com.hendraanggrian.appcompat.widget.SocialEditText
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editBio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:maxLines="5" />
+                android:layout_marginTop="15dp"
+                android:hint="Bio"
+                android:maxLines="5"
+                app:met_floatingLabel="highlight" />
 
         </LinearLayout>
 
